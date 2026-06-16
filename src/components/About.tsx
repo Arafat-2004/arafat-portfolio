@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { MapPin, GraduationCap } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import AnimatedCounter from "./AnimatedCounter";
@@ -47,17 +48,15 @@ export default function About() {
               <div className="absolute -bottom-3 -left-3 w-8 h-8 border-b-2 border-l-2 border-primary-500/40 rounded-bl-lg" />
               <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-primary-500/40 rounded-br-lg" />
 
-              <div className="aspect-[4/5] rounded-2xl glass overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-900/30 to-surface-900 transition-transform duration-500 group-hover:scale-[1.02]">
-                <div className="text-center p-8">
-                  <div className="w-28 h-28 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-4 ring-2 ring-primary-500/30 ring-offset-4 ring-offset-transparent">
-                    <span className="text-5xl font-bold gradient-text">
-                      AM
-                    </span>
-                  </div>
-                  <p className="text-surface-400 text-sm">
-                    Professional photo coming soon
-                  </p>
-                </div>
+              <div className="aspect-[4/5] rounded-2xl glass overflow-hidden relative bg-gradient-to-br from-primary-900/30 to-surface-900 transition-transform duration-500 group-hover:scale-[1.02]">
+                <Image
+                  src="/profile.jpg"
+                  alt="Arafat Mbaga — Full-Stack Developer & Designer"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover"
+                  priority
+                />
               </div>
 
               {/* Floating accent dots */}
