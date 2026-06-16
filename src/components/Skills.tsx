@@ -9,6 +9,7 @@ import {
   Terminal,
 } from "lucide-react";
 import { skills, type SkillCategory } from "@/data/portfolio";
+import TextReveal from "./TextReveal";
 
 const iconMap: Record<string, React.ElementType> = {
   Monitor,
@@ -33,7 +34,7 @@ function SkillCard({ category, index }: { category: SkillCategory; index: number
         <div className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center group-hover:bg-primary-500/20 transition-colors">
           <Icon size={20} className="text-primary-400" />
         </div>
-        <h3 className="text-lg font-semibold text-white">{category.category}</h3>
+        <h3 className="text-lg font-semibold text-heading">{category.category}</h3>
       </div>
 
       <div className="space-y-3">
@@ -100,8 +101,8 @@ export default function Skills() {
           <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
             Skills
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Technologies & tools I work with
+          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
+            <TextReveal text="Technologies & tools I work with" />
           </h2>
           <p className="text-surface-400 max-w-2xl mb-12">
             From frontend frameworks to design tools, here is the full stack of

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Code2, PenTool, Film, Network, ArrowRight } from "lucide-react";
 import { services } from "@/data/portfolio";
+import TextReveal from "./TextReveal";
 
 const iconMap: Record<string, React.ElementType> = {
   Code2,
@@ -24,8 +25,8 @@ export default function Services() {
           <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
             Services
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            What I can do for you
+          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
+            <TextReveal text="What I can do for you" />
           </h2>
           <p className="text-surface-400 max-w-2xl mb-12">
             Whether you need a website, a brand identity, animations, or IT
@@ -50,7 +51,7 @@ export default function Services() {
                   <Icon size={24} className="text-primary-400" />
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-3">
+                <h3 className="text-xl font-bold text-heading mb-3">
                   {service.title}
                 </h3>
                 <p className="text-surface-400 leading-relaxed mb-5">

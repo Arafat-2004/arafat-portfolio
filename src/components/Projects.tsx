@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { GithubIcon } from "./Icons";
 import { projects, type Project } from "@/data/portfolio";
+import TextReveal from "./TextReveal";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [expanded, setExpanded] = useState(false);
@@ -37,7 +38,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 Featured Project
               </div>
             )}
-            <h3 className="text-xl font-bold text-white">{project.name}</h3>
+            <h3 className="text-xl font-bold text-heading">{project.name}</h3>
             <p className="text-surface-400 text-sm mt-1">{project.tagline}</p>
           </div>
           <div className="flex gap-2">
@@ -46,7 +47,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
+                className="p-2 glass rounded-lg hover:bg-[var(--hover-bg)] transition-colors"
                 aria-label="View source code"
               >
                 <GithubIcon size={16} className="text-surface-300" />
@@ -57,7 +58,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
+                className="p-2 glass rounded-lg hover:bg-[var(--hover-bg)] transition-colors"
                 aria-label="View live demo"
               >
                 <ExternalLink size={16} className="text-surface-300" />
@@ -71,7 +72,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-surface-300"
+              className="px-2.5 py-1 text-xs font-mono bg-[var(--glass-bg)] border border-[var(--glass-border)] rounded-lg text-surface-300"
             >
               {tech}
             </span>
@@ -156,8 +157,8 @@ export default function Projects() {
           <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
             Projects
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            What I&apos;ve built
+          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
+            <TextReveal text="What I've built" />
           </h2>
           <p className="text-surface-400 max-w-2xl mb-12">
             A selection of projects that showcase my technical capabilities,

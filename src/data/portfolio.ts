@@ -303,3 +303,70 @@ export const navLinks = [
   { href: "#blog", label: "Blog" },
   { href: "#contact", label: "Contact" },
 ];
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  avatarInitial: string;
+}
+
+export const testimonials: Testimonial[] = [
+  {
+    id: "t1",
+    name: "Netphone Technology",
+    role: "Supervisor",
+    company: "Netphone Technology Limited",
+    quote:
+      "Arafat demonstrated strong technical aptitude during his field training. He quickly grasped complex networking concepts and contributed meaningfully to client installations.",
+    avatarInitial: "N",
+  },
+  {
+    id: "t2",
+    name: "Swahili Animations",
+    role: "Creative Director",
+    company: "Swahili Animations Ltd",
+    quote:
+      "A creative thinker with solid technical skills. Arafat consistently delivered high-quality design and animation work, and was always eager to learn new techniques.",
+    avatarInitial: "S",
+  },
+  {
+    id: "t3",
+    name: "TANESCO IT Dept",
+    role: "IT Manager",
+    company: "TANESCO Ilala City",
+    quote:
+      "Reliable, detail-oriented, and quick to adapt. Arafat handled IT support tasks efficiently and showed genuine interest in enterprise infrastructure management.",
+    avatarInitial: "T",
+  },
+];
+
+export interface BlogArticle {
+  id: string;
+  title: string;
+  tags: string[];
+  status: "published" | "planned";
+}
+
+export const plannedArticles: BlogArticle[] = [
+  {
+    id: "marketplace-nextjs",
+    title: "Building a Multi-Vendor Marketplace with Next.js and Supabase",
+    tags: ["Next.js", "Supabase", "Architecture"],
+    status: "planned",
+  },
+  {
+    id: "designer-to-developer",
+    title: "From Graphic Designer to Full-Stack Developer: My Journey",
+    tags: ["Career", "Design", "Development"],
+    status: "planned",
+  },
+  {
+    id: "it-infrastructure-lessons",
+    title: "What I Learned About IT Infrastructure at Netphone Technology",
+    tags: ["IT", "Networking", "Field Training"],
+    status: "planned",
+  },
+];

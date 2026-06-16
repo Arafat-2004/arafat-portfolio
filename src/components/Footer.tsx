@@ -1,14 +1,27 @@
 import { ArrowUp } from "lucide-react";
 import { GithubIcon, InstagramIcon, LinkedinIcon } from "./Icons";
-import { personalInfo } from "@/data/portfolio";
+import { personalInfo, navLinks } from "@/data/portfolio";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-surface-950">
+    <footer className="border-t border-[var(--glass-border)] bg-surface-950">
       <div className="container-narrow px-4 sm:px-6 lg:px-8 py-12">
+        {/* Navigation links */}
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-10">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-sm text-surface-500 hover:text-heading transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
-            <a href="#home" className="text-lg font-bold text-white">
+            <a href="#home" className="text-lg font-bold text-heading">
               Arafat<span className="text-primary-400">.</span>
             </a>
             <p className="text-sm text-surface-500 mt-1">
@@ -21,7 +34,7 @@ export default function Footer() {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-surface-500 hover:text-white transition-colors"
+              className="text-surface-500 hover:text-heading transition-colors"
               aria-label="GitHub"
             >
               <GithubIcon size={18} />
@@ -30,7 +43,7 @@ export default function Footer() {
               href={personalInfo.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-surface-500 hover:text-white transition-colors"
+              className="text-surface-500 hover:text-heading transition-colors"
               aria-label="Instagram"
             >
               <InstagramIcon size={18} />
@@ -39,7 +52,7 @@ export default function Footer() {
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-surface-500 hover:text-white transition-colors"
+              className="text-surface-500 hover:text-heading transition-colors"
               aria-label="LinkedIn"
             >
               <LinkedinIcon size={18} />
@@ -47,7 +60,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 pt-8 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-surface-600">
             &copy; {new Date().getFullYear()} {personalInfo.name}. Built with
             Next.js & Tailwind CSS.

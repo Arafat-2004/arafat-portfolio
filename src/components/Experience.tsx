@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { experiences } from "@/data/portfolio";
+import TextReveal from "./TextReveal";
 
 export default function Experience() {
   return (
@@ -17,8 +18,8 @@ export default function Experience() {
           <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
             Experience
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            My professional journey
+          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
+            <TextReveal text="My professional journey" />
           </h2>
           <p className="text-surface-400 max-w-2xl mb-12">
             Four organizations before graduation — from IT support to design to
@@ -49,7 +50,7 @@ export default function Experience() {
                 <div className="glass rounded-2xl p-6 hover-lift">
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                     <div>
-                      <h3 className="text-lg font-bold text-white">
+                      <h3 className="text-lg font-bold text-heading">
                         {exp.role}
                       </h3>
                       <p className="text-primary-400 font-medium">

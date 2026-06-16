@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { GithubIcon, InstagramIcon, LinkedinIcon } from "./Icons";
 import { personalInfo } from "@/data/portfolio";
+import TextReveal from "./TextReveal";
 
 const subjects = [
   "Job Opportunity",
@@ -50,11 +51,35 @@ export default function Contact() {
     if (!validate()) return;
 
     setStatus("sending");
-    // Simulate sending — replace with actual email service (Resend, Formspree, etc.)
-    await new Promise((r) => setTimeout(r, 1500));
-    setStatus("sent");
-    setFormState({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setStatus("idle"), 5000);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "",
+          name: formState.name,
+          email: formState.email,
+          subject: formState.subject,
+          message: formState.message,
+          from_name: "Arafat Portfolio",
+        }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setStatus("sent");
+        setFormState({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -69,8 +94,8 @@ export default function Contact() {
           <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
             Contact
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Let&apos;s work together
+          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
+            <TextReveal text="Let's work together" />
           </h2>
           <p className="text-surface-400 max-w-2xl mb-12">
             Have a project in mind, a job opportunity, or just want to connect?
@@ -90,7 +115,7 @@ export default function Contact() {
             <div className="space-y-4">
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="flex items-center gap-3 text-surface-300 hover:text-white transition-colors group"
+                className="flex items-center gap-3 text-surface-300 hover:text-heading transition-colors group"
               >
                 <div className="w-10 h-10 rounded-xl glass flex items-center justify-center group-hover:bg-primary-500/10 transition-colors">
                   <Mail size={18} className="text-primary-400" />
@@ -99,7 +124,7 @@ export default function Contact() {
               </a>
               <a
                 href={`tel:${personalInfo.phone}`}
-                className="flex items-center gap-3 text-surface-300 hover:text-white transition-colors group"
+                className="flex items-center gap-3 text-surface-300 hover:text-heading transition-colors group"
               >
                 <div className="w-10 h-10 rounded-xl glass flex items-center justify-center group-hover:bg-primary-500/10 transition-colors">
                   <Phone size={18} className="text-primary-400" />
@@ -119,7 +144,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-white/5">
+            <div className="pt-4 border-t border-[var(--glass-border)]">
               <p className="text-sm text-surface-500 mb-3">
                 Find me on social media
               </p>
@@ -128,7 +153,7 @@ export default function Contact() {
                   href={personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-surface-400 hover:text-white hover:bg-primary-500/10 transition-all"
+                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-surface-400 hover:text-heading hover:bg-primary-500/10 transition-all"
                   aria-label="GitHub"
                 >
                   <GithubIcon size={18} />
@@ -137,7 +162,7 @@ export default function Contact() {
                   href={personalInfo.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-surface-400 hover:text-white hover:bg-primary-500/10 transition-all"
+                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-surface-400 hover:text-heading hover:bg-primary-500/10 transition-all"
                   aria-label="Instagram"
                 >
                   <InstagramIcon size={18} />
@@ -146,7 +171,7 @@ export default function Contact() {
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-surface-400 hover:text-white hover:bg-primary-500/10 transition-all"
+                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-surface-400 hover:text-heading hover:bg-primary-500/10 transition-all"
                   aria-label="LinkedIn"
                 >
                   <LinkedinIcon size={18} />
@@ -175,6 +200,26 @@ export default function Contact() {
               </motion.div>
             )}
 
+            {status === "error" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm"
+              >
+                Something went wrong. Please try again or email me directly.
+              </motion.div>
+            )}
+
+            {/* Honeypot — hidden from users, bots will fill it */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              className="hidden"
+              style={{ display: "none" }}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-surface-400 mb-1.5">
@@ -186,8 +231,8 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormState({ ...formState, name: e.target.value })
                   }
-                  className={`w-full px-4 py-3 bg-surface-800/50 border rounded-xl text-white text-sm placeholder:text-surface-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all ${
-                    errors.name ? "border-red-500/50" : "border-white/10"
+                  className={`w-full px-4 py-3 bg-[var(--input-bg)] border rounded-xl text-heading text-sm placeholder:text-surface-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all ${
+                    errors.name ? "border-red-500/50" : "border-[var(--glass-border)]"
                   }`}
                   placeholder="Your name"
                 />
@@ -205,8 +250,8 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormState({ ...formState, email: e.target.value })
                   }
-                  className={`w-full px-4 py-3 bg-surface-800/50 border rounded-xl text-white text-sm placeholder:text-surface-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all ${
-                    errors.email ? "border-red-500/50" : "border-white/10"
+                  className={`w-full px-4 py-3 bg-[var(--input-bg)] border rounded-xl text-heading text-sm placeholder:text-surface-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all ${
+                    errors.email ? "border-red-500/50" : "border-[var(--glass-border)]"
                   }`}
                   placeholder="your@email.com"
                 />
@@ -225,8 +270,8 @@ export default function Contact() {
                 onChange={(e) =>
                   setFormState({ ...formState, subject: e.target.value })
                 }
-                className={`w-full px-4 py-3 bg-surface-800/50 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all ${
-                  errors.subject ? "border-red-500/50" : "border-white/10"
+                className={`w-full px-4 py-3 bg-[var(--input-bg)] border rounded-xl text-heading text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all ${
+                  errors.subject ? "border-red-500/50" : "border-[var(--glass-border)]"
                 } ${!formState.subject ? "text-surface-600" : ""}`}
               >
                 <option value="" disabled>
@@ -253,8 +298,8 @@ export default function Contact() {
                   setFormState({ ...formState, message: e.target.value })
                 }
                 rows={5}
-                className={`w-full px-4 py-3 bg-surface-800/50 border rounded-xl text-white text-sm placeholder:text-surface-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all resize-none ${
-                  errors.message ? "border-red-500/50" : "border-white/10"
+                className={`w-full px-4 py-3 bg-[var(--input-bg)] border rounded-xl text-heading text-sm placeholder:text-surface-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all resize-none ${
+                  errors.message ? "border-red-500/50" : "border-[var(--glass-border)]"
                 }`}
                 placeholder="Tell me about your project or opportunity..."
               />
