@@ -1,78 +1,73 @@
-import { ArrowUp } from "lucide-react";
-import { GithubIcon, InstagramIcon, LinkedinIcon } from "./Icons";
-import { personalInfo, navLinks } from "@/data/portfolio";
+import { personalInfo } from "@/data/portfolio";
+
+const footerLinks = [
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#contact", label: "Contact" },
+];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--glass-border)] bg-surface-950">
-      <div className="container-narrow px-4 sm:px-6 lg:px-8 py-12">
-        {/* Navigation links */}
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-10">
-          {navLinks.map((link) => (
+    <footer
+      className="py-16 px-5"
+      style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+    >
+      <div className="container-wide text-center">
+        {/* Monogram */}
+        <p
+          className="mb-6"
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "1.25rem",
+            color: "#f4efe9",
+          }}
+        >
+          AM
+        </p>
+
+        {/* Nav links */}
+        <nav
+          aria-label="Footer navigation"
+          className="inline-flex flex-wrap items-center justify-center gap-8"
+        >
+          {footerLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-surface-500 hover:text-heading transition-colors"
+              className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#5a5651] hover:text-[#f4efe9] transition-colors duration-300"
             >
               {link.label}
             </a>
           ))}
-        </div>
+        </nav>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-center md:text-left">
-            <a href="#home" className="text-lg font-bold text-heading">
-              Arafat<span className="text-primary-400">.</span>
-            </a>
-            <p className="text-sm text-surface-500 mt-1">
-              Full-Stack Developer & Designer — {personalInfo.location}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-surface-500 hover:text-heading transition-colors"
-              aria-label="GitHub"
-            >
-              <GithubIcon size={18} />
-            </a>
-            <a
-              href={personalInfo.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-surface-500 hover:text-heading transition-colors"
-              aria-label="Instagram"
-            >
-              <InstagramIcon size={18} />
-            </a>
-            <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-surface-500 hover:text-heading transition-colors"
-              aria-label="LinkedIn"
-            >
-              <LinkedinIcon size={18} />
-            </a>
-          </div>
-        </div>
-
-        <div className="mt-8 pt-8 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-surface-600">
-            &copy; {new Date().getFullYear()} {personalInfo.name}. Built with
-            Next.js & Tailwind CSS.
-          </p>
+        {/* Social links */}
+        <div className="inline-flex items-center justify-center gap-6 mt-6">
           <a
-            href="#home"
-            className="flex items-center gap-1.5 text-xs text-surface-600 hover:text-primary-400 transition-colors"
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#8a8580] hover:text-[#f4efe9] transition-colors duration-300"
+            aria-label="GitHub"
           >
-            Back to top
-            <ArrowUp size={12} />
+            GitHub
+          </a>
+          <a
+            href={personalInfo.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#8a8580] hover:text-[#f4efe9] transition-colors duration-300"
+            aria-label="Instagram"
+          >
+            Instagram
           </a>
         </div>
+
+        {/* Copyright */}
+        <p className="font-mono text-[0.625rem] text-[#3a3835] mt-10">
+          &copy; 2026 Arafat Mbaga. All rights reserved.
+        </p>
       </div>
     </footer>
   );

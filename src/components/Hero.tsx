@@ -1,165 +1,86 @@
-"use client";
-
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { ArrowDown, Download } from "lucide-react";
-import { GithubIcon, InstagramIcon } from "./Icons";
 import { personalInfo } from "@/data/portfolio";
-import TypewriterText from "./TypewriterText";
-import MagneticButton from "./MagneticButton";
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  // Parallax movement for background orbs
-  const orb1Y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const orb2Y = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const orb3Y = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const orbOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
-
   return (
     <section
-      ref={sectionRef}
       id="home"
-      className="relative min-h-screen flex items-center justify-center section-padding overflow-hidden"
+      className="relative min-h-screen flex items-center section-padding"
     >
-      {/* Background gradient orbs with parallax */}
-      <motion.div
-        className="absolute inset-0 overflow-hidden pointer-events-none"
-        style={{ opacity: orbOpacity }}
-      >
-        <motion.div
-          style={{ y: orb1Y }}
-          className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl"
-          aria-hidden="true"
-        >
-          <div className="w-full h-full rounded-full bg-[var(--orb-1)]" />
-        </motion.div>
-        <motion.div
-          style={{ y: orb2Y }}
-          className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl"
-          aria-hidden="true"
-        >
-          <div className="w-full h-full rounded-full bg-[var(--orb-2)]" />
-        </motion.div>
-        <motion.div
-          style={{ y: orb3Y }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl"
-          aria-hidden="true"
-        >
-          <div className="w-full h-full rounded-full bg-[var(--orb-3)]" />
-        </motion.div>
-      </motion.div>
+      <div className="container-wide w-full">
+        {/* Small label */}
+        <p className="hero-rise hero-delay-1 font-mono text-xs uppercase tracking-[0.25em] text-[#8a8580] mb-6">
+          PORTFOLIO
+        </p>
 
-      {/* Grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(var(--grid-color)_1px,transparent_1px),linear-gradient(90deg,var(--grid-color)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        {/* Main headline */}
+        <h1 className="leading-[0.9]">
+          <span
+            className="hero-rise hero-delay-2 block font-light text-[#f4efe9]"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(3.5rem, 10vw, 8rem)",
+            }}
+          >
+            ARAFAT
+          </span>
+          <span
+            className="hero-rise hero-delay-3 block outline-text"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(3.5rem, 10vw, 8rem)",
+              fontWeight: 300,
+            }}
+          >
+            MBAGA
+          </span>
+        </h1>
 
-      <div className="container-narrow relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-4">
-            <TypewriterText text="Full-Stack Developer & Designer" speed={50} delay={0.5} />
-          </p>
-        </motion.div>
+        {/* Copper line */}
+        <div
+          className="hero-rise hero-delay-3 mt-6 h-px"
+          style={{ backgroundColor: "#c89b6e", maxWidth: "80px" }}
+        />
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-heading mb-6"
-        >
-          Hi, I&apos;m{" "}
-          <span className="gradient-text">{personalInfo.name}</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg sm:text-xl text-surface-400 max-w-2xl mx-auto mb-10 leading-relaxed"
-        >
+        {/* Tagline */}
+        <p className="hero-rise hero-delay-4 font-sans text-[1.125rem] text-[#8a8580] max-w-lg mt-8 leading-relaxed">
           {personalInfo.tagline}
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <MagneticButton>
-            <a
-              href="#projects"
-              className="inline-block px-8 py-3.5 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-primary-500/25"
-            >
-              View My Work
-            </a>
-          </MagneticButton>
-          <MagneticButton>
-            <a
-              href="#contact"
-              className="inline-block px-8 py-3.5 glass hover:bg-[var(--hover-bg)] text-heading font-medium rounded-xl transition-all duration-200"
-            >
-              Get in Touch
-            </a>
-          </MagneticButton>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="flex items-center justify-center gap-6 mt-12"
-        >
+        {/* CTAs */}
+        <div className="hero-rise hero-delay-5 inline-flex items-center gap-8 mt-12">
           <a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-surface-500 hover:text-heading transition-colors"
-            aria-label="GitHub"
+            href="#projects"
+            className="link-underline font-mono text-xs uppercase tracking-[0.15em]"
           >
-            <GithubIcon size={22} />
+            View Work
           </a>
           <a
-            href={personalInfo.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-surface-500 hover:text-heading transition-colors"
-            aria-label="Instagram"
+            href="#contact"
+            className="font-mono text-xs uppercase tracking-[0.15em] text-[#f4efe9] border border-[rgba(255,255,255,0.1)] px-6 py-3 hover:border-[#c89b6e] transition-colors duration-500"
           >
-            <InstagramIcon size={22} />
+            Get in Touch
           </a>
-          <a
-            href="/arafat-cv.pdf"
-            download
-            className="px-4 py-2 text-sm text-surface-400 hover:text-heading glass rounded-lg flex items-center gap-2 transition-all hover:-translate-y-0.5"
-          >
-            <Download size={16} />
-            Download CV
-          </a>
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      {/* Social links — bottom-right absolute */}
+      <div className="absolute bottom-10 right-5 sm:right-8 lg:right-10 flex flex-col items-end gap-3">
+        <a
+          href={personalInfo.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#5a5651] hover:text-[#f4efe9] transition-colors duration-300"
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <ArrowDown size={20} className="text-surface-600" />
-          </motion.div>
-        </motion.div>
+          GitHub
+        </a>
+        <a
+          href={personalInfo.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#5a5651] hover:text-[#f4efe9] transition-colors duration-300"
+        >
+          Instagram
+        </a>
       </div>
     </section>
   );

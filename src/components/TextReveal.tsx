@@ -18,9 +18,9 @@ export default function TextReveal({
   const words = text.split(" ");
 
   return (
-    <motion.span className={className} aria-label={text}>
+    <span className={className} aria-label={text}>
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden">
+        <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
           <motion.span
             className="inline-block"
             initial={{ y: "100%" }}
@@ -34,9 +34,8 @@ export default function TextReveal({
           >
             {word}
           </motion.span>
-          {i < words.length - 1 && <span>&nbsp;</span>}
         </span>
       ))}
-    </motion.span>
+    </span>
   );
 }

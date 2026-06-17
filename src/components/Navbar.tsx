@@ -1,146 +1,137 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
 import { navLinks } from "@/data/portfolio";
-import { useActiveSection } from "@/hooks/useActiveSection";
-import { useTheme } from "@/context/ThemeContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-  const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
-  const activeSection = useActiveSection(sectionIds);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on escape
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
     if (isOpen) {
+      document.body.style.overflow = "hidden";
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setIsOpen(false);
+      };
       document.addEventListener("keydown", handleEscape);
-      return () => document.removeEventListener("keydown", handleEscape);
+      return () => {
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", handleEscape);
+      };
+    } else {
+      document.body.style.overflow = "";
     }
   }, [isOpen]);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "glass-dark shadow-lg shadow-black/10"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="container-narrow flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <a
-          href="#home"
-          className="text-xl font-bold tracking-tight text-heading hover:text-primary-400 transition-colors"
-        >
-          Arafat<span className="text-primary-400">.</span>
-        </a>
+    <>
+      {/* ── Fixed navbar ── */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "backdrop-blur-md border-b border-[rgba(255,255,255,0.06)]"
+            : "bg-transparent"
+        }`}
+        style={scrolled ? { backgroundColor: "rgba(15,14,12,0.85)" } : undefined}
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        <div className="container-wide flex items-center justify-between px-5 sm:px-8 lg:px-10 py-5">
+          {/* Monogram */}
+          <a
+            href="#home"
+            className="transition-colors duration-300 hover:text-[#c89b6e]"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "1.5rem",
+              letterSpacing: "0.05em",
+              color: "#f4efe9",
+            }}
+            aria-label="Home"
+          >
+            AM
+          </a>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="font-sans text-[0.75rem] uppercase tracking-[0.2em] text-[#8a8580] hover:text-[#f4efe9] transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden relative z-50 p-2"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+          >
+            <div className="w-6 flex flex-col gap-[6px]">
+              <span
+                className={`block h-px bg-[#f4efe9] transition-all duration-300 origin-center ${
+                  isOpen ? "translate-y-[3.5px] rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`block h-px bg-[#f4efe9] transition-all duration-300 ${
+                  isOpen ? "opacity-0 scale-0" : ""
+                }`}
+              />
+              <span
+                className={`block h-px bg-[#f4efe9] transition-all duration-300 origin-center ${
+                  isOpen ? "-translate-y-[3.5px] -rotate-45" : ""
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+      </nav>
+
+      {/* ── Mobile overlay ── */}
+      <div
+        className={`fixed inset-0 z-40 flex items-center justify-center md:hidden transition-all duration-500 ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        style={{ backgroundColor: "#0f0e0c" }}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        <nav className="flex flex-col items-center gap-8">
+          {navLinks.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-                activeSection === link.href.replace("#", "")
-                  ? "text-primary-400 bg-primary-400/10"
-                  : "text-surface-400 hover:text-heading hover:bg-[var(--hover-bg)]"
-              }`}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-4 group"
             >
-              {link.label}
+              <span className="font-mono text-[0.625rem] text-[#5a5651] group-hover:text-[#c89b6e] transition-colors">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span
+                className="text-[2rem] font-light text-[#f4efe9] group-hover:text-[#c89b6e] transition-colors duration-300"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {link.label}
+              </span>
             </a>
           ))}
-        </div>
-
-        {/* Theme toggle + Mobile toggle */}
-        <div className="flex items-center gap-2">
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg text-surface-400 hover:text-heading hover:bg-[var(--hover-bg)] transition-all duration-200"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              {theme === "dark" ? (
-                <motion.div
-                  key="sun"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Sun size={18} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="moon"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Moon size={18} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </button>
-
-          {/* Mobile menu toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-surface-300 hover:text-heading transition-colors"
-            aria-label="Toggle menu"
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        </nav>
       </div>
-
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden glass-dark border-t border-[var(--glass-border)]"
-          >
-            <div className="container-narrow px-4 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                    activeSection === link.href.replace("#", "")
-                      ? "text-primary-400 bg-primary-400/10"
-                      : "text-surface-300 hover:text-heading hover:bg-[var(--hover-bg)]"
-                  }`}
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+    </>
   );
 }

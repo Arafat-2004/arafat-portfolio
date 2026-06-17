@@ -1,72 +1,49 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
 import { testimonials } from "@/data/portfolio";
-import TextReveal from "./TextReveal";
 
 export default function Testimonials() {
   return (
     <section id="testimonials" className="section-padding">
-      <div className="container-narrow">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
-            Testimonials
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
-            <TextReveal text="What people say about my work" />
-          </h2>
-          <p className="text-surface-400 max-w-2xl mb-12">
-            Feedback from supervisors and colleagues across my professional
-            journey.
-          </p>
-        </motion.div>
+      <div className="container-wide">
+        <div className="reveal">
+          <h2 className="section-heading">KIND WORDS</h2>
+        </div>
 
-        <div className="grid sm:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass rounded-2xl p-6 hover-lift relative group"
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((t, index) => (
+            <blockquote
+              key={t.id}
+              className={`elegant-card p-8 reveal reveal-delay-${index + 1}`}
             >
-              {/* Quote icon */}
-              <div className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4">
-                <Quote size={18} className="text-primary-400" />
-              </div>
+              {/* Large opening quote mark */}
+              <span
+                className="text-6xl leading-none mb-4 block select-none text-[#c89b6e]"
+                style={{ fontFamily: 'var(--font-serif)' }}
+                aria-hidden="true"
+              >
+                &ldquo;
+              </span>
 
-              {/* Testimonial text */}
-              <p className="text-surface-300 leading-relaxed text-sm mb-6 italic">
-                &ldquo;{testimonial.quote}&rdquo;
+              {/* Quote text */}
+              <p
+                className="text-lg font-light italic leading-relaxed mb-8 text-[#f4efe9]"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                {t.quote}
               </p>
 
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-[var(--glass-border)]">
-                <div className="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center shrink-0">
-                  <span className="text-sm font-bold text-primary-400">
-                    {testimonial.avatarInitial}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-heading">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-xs text-surface-500">
-                    {testimonial.role} — {testimonial.company}
-                  </p>
-                </div>
-              </div>
+              {/* Divider line */}
+              <div className="w-8 h-px bg-[#c89b6e] mb-6" />
 
-              {/* Hover gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
-            </motion.div>
+              {/* Name */}
+              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-[#cdc7be]">
+                {t.name}
+              </p>
+
+              {/* Role + Company */}
+              <p className="font-mono text-[0.625rem] text-[#5a5651] mt-1">
+                {t.role} &mdash; {t.company}
+              </p>
+            </blockquote>
           ))}
         </div>
       </div>

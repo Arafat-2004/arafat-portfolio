@@ -1,131 +1,110 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { MapPin, GraduationCap } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
-import AnimatedCounter from "./AnimatedCounter";
-import TextReveal from "./TextReveal";
-
-const stats = [
-  { value: 4, suffix: "+", label: "Organizations" },
-  { value: 5, suffix: "+", label: "Technologies" },
-  { value: 3, suffix: "+", label: "Years Design" },
-  { value: 2, suffix: "", label: "Featured Projects" },
-];
 
 export default function About() {
+  const paragraphs = personalInfo.bio.split("\n\n");
+
   return (
     <section id="about" className="section-padding">
-      <div className="container-narrow">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
-            About Me
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-12">
-            <TextReveal text="The story behind the code" />
-          </h2>
-        </motion.div>
+      <div className="container-wide">
+        <div className="section-heading reveal">
+          ABOUT
+        </div>
 
-        <div className="grid md:grid-cols-5 gap-12 items-start">
-          {/* Photo placeholder — enhanced */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="md:col-span-2"
-          >
-            <div className="relative group">
-              {/* Decorative corner brackets */}
-              <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-primary-500/40 rounded-tl-lg" />
-              <div className="absolute -top-3 -right-3 w-8 h-8 border-t-2 border-r-2 border-primary-500/40 rounded-tr-lg" />
-              <div className="absolute -bottom-3 -left-3 w-8 h-8 border-b-2 border-l-2 border-primary-500/40 rounded-bl-lg" />
-              <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-primary-500/40 rounded-br-lg" />
-
-              <div className="aspect-[4/5] rounded-2xl glass overflow-hidden relative bg-gradient-to-br from-primary-900/30 to-surface-900 transition-transform duration-500 group-hover:scale-[1.02]">
-                <Image
-                  src="/profile.jpg"
-                  alt="Arafat Mbaga — Full-Stack Developer & Designer"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-
-              {/* Floating accent dots */}
-              <div className="absolute top-6 -right-2 w-3 h-3 rounded-full bg-primary-500/40 animate-pulse" />
-              <div className="absolute bottom-10 -left-2 w-2 h-2 rounded-full bg-purple-500/40 animate-pulse delay-1000" />
-
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary-600/20 rounded-2xl blur-xl" />
+        <div className="grid md:grid-cols-12 gap-12">
+          {/* Left column — Portrait */}
+          <div className="md:col-span-4 reveal reveal-delay-1">
+            <div className="overflow-hidden rounded-sm">
+              <Image
+                src="/profile.jpg"
+                alt="Arafat Mbaga"
+                width={480}
+                height={640}
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="aspect-[3/4] object-cover object-top w-full h-full"
+              />
             </div>
-          </motion.div>
-
-          {/* Bio */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="md:col-span-3"
-          >
-            <div className="space-y-5 text-surface-300 leading-relaxed text-lg">
-              {personalInfo.bio.split("\n\n").map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))}
+            <div className="mt-4 space-y-1">
+              <p className="font-mono text-xs text-[#5a5651]">
+                {personalInfo.location}
+              </p>
+              <p className="font-mono text-xs text-[#5a5651]">
+                {personalInfo.availability}
+              </p>
             </div>
+          </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 glass px-4 py-2.5 rounded-xl text-sm">
-                <MapPin size={16} className="text-primary-400" />
-                <span className="text-surface-300">
-                  {personalInfo.location}
-                </span>
-              </div>
-              <div className="flex items-center gap-2 glass px-4 py-2.5 rounded-xl text-sm">
-                <GraduationCap size={16} className="text-primary-400" />
-                <span className="text-surface-300">
-                  MUST — Computer Science & Engineering
-                </span>
-              </div>
-              <div className="flex items-center gap-2 glass px-4 py-2.5 rounded-xl text-sm">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-surface-300">
-                  {personalInfo.availability}
-                </span>
-              </div>
+          {/* Right column — Bio */}
+          <div className="md:col-span-8">
+            <h2
+              className="text-3xl md:text-4xl font-light text-[#f4efe9] mb-8 reveal reveal-delay-2"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              A developer with a designer&apos;s eye
+            </h2>
+
+            <div className="reveal reveal-delay-3">
+              {paragraphs.map((paragraph, i) =>
+                i === 0 ? (
+                  <p
+                    key={i}
+                    className="text-base leading-[1.85] text-[#cdc7be] mb-6"
+                  >
+                    <span
+                      className="float-left text-5xl font-light mr-2 mt-1 text-[#c89b6e] leading-none"
+                      style={{ fontFamily: "var(--font-serif)" }}
+                    >
+                      {paragraph.charAt(0)}
+                    </span>
+                    {paragraph.slice(1)}
+                  </p>
+                ) : (
+                  <p
+                    key={i}
+                    className="text-base leading-[1.85] text-[#cdc7be] mb-6"
+                  >
+                    {paragraph}
+                  </p>
+                )
+              )}
             </div>
 
-            {/* Animated stat counters */}
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-                  className="glass rounded-xl p-4 text-center"
+            <div className="flex gap-12 mt-10 reveal reveal-delay-4">
+              <div>
+                <span
+                  className="block text-3xl text-[#f4efe9]"
+                  style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  <div className="text-2xl sm:text-3xl font-bold gradient-text">
-                    <AnimatedCounter
-                      target={stat.value}
-                      suffix={stat.suffix}
-                    />
-                  </div>
-                  <div className="text-xs text-surface-500 mt-1 font-medium">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
+                  4+
+                </span>
+                <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#8a8580]">
+                  Organizations
+                </span>
+              </div>
+              <div>
+                <span
+                  className="block text-3xl text-[#f4efe9]"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  3+
+                </span>
+                <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#8a8580]">
+                  Years Design
+                </span>
+              </div>
+              <div>
+                <span
+                  className="block text-3xl text-[#f4efe9]"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  2025
+                </span>
+                <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#8a8580]">
+                  Graduating
+                </span>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

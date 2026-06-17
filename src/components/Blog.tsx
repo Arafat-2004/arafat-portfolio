@@ -1,69 +1,53 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { BookOpen, ArrowRight } from "lucide-react";
 import { plannedArticles } from "@/data/portfolio";
-import TextReveal from "./TextReveal";
 
 export default function Blog() {
   return (
-    <section id="blog" className="section-padding bg-surface-900/30">
-      <div className="container-narrow">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+    <section id="blog" className="section-padding">
+      <div className="container-wide">
+        <div className="section-heading reveal">
+          WRITING
+        </div>
+
+        <p
+          className="text-2xl md:text-3xl font-light text-[#f4efe9] max-w-2xl mb-12 reveal reveal-delay-1"
+          style={{ fontFamily: "var(--font-serif)" }}
         >
-          <p className="text-primary-400 font-mono text-sm tracking-wider uppercase mb-2">
-            Blog
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-heading mb-4">
-            <TextReveal text="Thoughts & insights" />
-          </h2>
-          <p className="text-surface-400 max-w-2xl mb-12">
-            Articles about web development, design, and my journey in tech.
-          </p>
-        </motion.div>
+          Thoughts on code, design, and everything in between.
+        </p>
 
-        <div className="grid sm:grid-cols-3 gap-6">
-          {plannedArticles.map((article, index) => (
-            <motion.div
-              key={article.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass rounded-2xl p-6 group relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-[var(--glass-bg)] flex items-center justify-center mb-4">
-                  <BookOpen size={18} className="text-surface-500" />
-                </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {plannedArticles.map((article, index) => {
+            const delay = Math.min(index + 1, 5);
 
-                <h3 className="text-base font-semibold text-heading mb-3 leading-snug">
-                  {article.title}
-                </h3>
-
-                <div className="flex flex-wrap gap-1.5 mb-4">
+            return (
+              <article
+                key={article.id}
+                className={`elegant-card p-8 reveal reveal-delay-${delay}`}
+              >
+                <div className="flex flex-wrap gap-2">
                   {article.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs font-mono bg-[var(--glass-bg)] text-surface-500 rounded-md"
+                      className="font-mono text-[0.5625rem] uppercase tracking-[0.15em] text-[#5a5651] border border-[rgba(255,255,255,0.06)] px-2 py-1"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <span className="inline-flex items-center gap-1 text-xs text-surface-600 font-medium">
-                  Coming soon
-                  <ArrowRight size={12} />
+                <h3
+                  className="mt-6 text-xl text-[#f4efe9] font-light leading-snug"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  {article.title}
+                </h3>
+
+                <span className="mt-6 block font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[#c89b6e]">
+                  Coming Soon
                 </span>
-              </div>
-            </motion.div>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

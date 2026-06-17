@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import MarqueeStrip from "@/components/MarqueeStrip";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
@@ -9,20 +10,14 @@ import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import LoadingScreen from "@/components/LoadingScreen";
-import ScrollProgress from "@/components/ScrollProgress";
-import BackToTop from "@/components/BackToTop";
-import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
   return (
     <>
-      <LoadingScreen />
-      <ScrollProgress />
-      <CustomCursor />
       <Navbar />
       <main id="main-content">
         <Hero />
+        <MarqueeStrip />
         <About />
         <Skills />
         <Projects />
@@ -33,7 +28,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <BackToTop />
     </>
   );
 }
