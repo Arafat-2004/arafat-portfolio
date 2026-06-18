@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://arafatmbaga.vercel.app/sitemap.xml",
+    sitemap: "https://arafat-mbaga.vercel.app/sitemap.xml",
   };
 }
